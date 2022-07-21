@@ -1,0 +1,58 @@
+Izmantotie Snippeti un funkcijas:
+
+Custom lauka izvade, the_field funkcija izpilda echo funkciju, jeb izvadu
+
+<?php the_field('lauka_nosaukums'); ?>
+
+Custom lauka izvade tikai ar vērību, jeb get_field funkcija Jums iedos vērtību, variable, piemēram <?php $janis = get_field('lauka_nosaukums'); ?>
+
+<?php get_field('lauka_nosaukums'); ?>
+
+the_sub_field un get_sub_field funkcijas izmanto Repeater ciklu konstrukcijai:
+
+<?php the_sub_field('caption'); ?>
+
+Custom lauka pārbaude, šādi pārbaudam vai vispār Custom lauks satur vērtību, varam lietot tikai pārbaudi vai arī papildināt ar else: funkiju:
+
+<?php if( get_field('field_name') ): ?>
+	<p>My field value: <?php the_field('field_name'); ?></p>
+<?php endif; ?>
+
+<?php if( get_field('field_name') ): ?>
+	<p>Es esmu atrasts!: <?php the_field('field_name'); ?></p>
+<?php else: ?>
+	<p>Darīt kaut ko citu</p>
+<?php endif; ?>
+
+
+If have rows un while have rows funkcija ir domāta, lai lietotu repeater laukus, jeb atkārtojošos laukus, piemēram tur slaideriem, vai tabiem, lietojam tiem blokiem, kuri mums atkārtojās:
+
+
+<?php if( have_rows('slides') ): // Pārbauda vai vispār lauks eksistē ?> 
+    <ul class="slides">
+    <?php while( have_rows('slides') ): the_row(); // Notiek Loop cikls katram laukam ?>
+        <li>
+            <p><?php the_sub_field('caption'); ?></p>
+        </li>
+    <?php endwhile; ?>
+    </ul>
+<?php endif; ?>
+
+
+Galerijas piemērs ar Foreach ciklu:
+
+
+<?php 
+$images = get_field('gallery');
+$size = 'full'; // (thumbnail, medium, large, full or custom size)
+if( $images ): ?>
+    <ul>
+        <?php foreach( $images as $image_id ): ?>
+            <li>
+                <?php echo wp_get_attachment_image( $image_id, $size ); ?>
+            </li>
+        <?php endforeach; ?>
+    </ul>
+<?php endif; ?>
+
+
